@@ -1,4 +1,4 @@
-//路径提示插件Path Intellisense
+//路径提示插件
 {
    "compilerOptions": {
       "target": "ES6",
