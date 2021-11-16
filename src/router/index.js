@@ -1,23 +1,33 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import popup from '../views/MyPopup.vue';
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    redirect: '/home',
+
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/home',
+    component: Home,
+    children:[
+      {
+        // 二级路由要么不带“/”,要么就带上完整路径地址，包括一级路径地址一起带上，完整的路径，如:'/home/popup'
+        path: 'popup',
+        component: popup,
+    
+      },
+    ]
+  },
+  // {
+  //   path: '/about',
+  //   name: 'About',
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  // }
 ]
 
 const router = new VueRouter({
