@@ -37,13 +37,14 @@ export default {
   },
   methods:{
     async GetPopup(){
-      const {data:res}=await GetPopupData()
-      if (res.errno==0) {
+      const {data:res}=await GetPopupData() 
+       if (res.errno==0) {
         this.historyKeywordList=res.data.historyKeywordList
         this.hotKeywordList=res.data.hotKeywordList
         this.defaultKeyword=res.data.defaultKeyword.keyword
+        this.$emit("myEvent",this.defaultKeyword)
       }
-    this.$emit("myEvent",this.defaultKeyword)
+      
     },
   },
 };
