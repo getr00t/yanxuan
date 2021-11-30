@@ -6,7 +6,14 @@
         <van-icon name="delete-o" />
       </div>
       <div class="botton">
-        <van-tag plain type="default" v-for="(item,index) in historyKeywordList" :key="index">{{item}}</van-tag>
+        <van-tag
+          @click="tagValue"
+          plain
+          type="default"
+          v-for="(item, index) in historyKeywordList"
+          :key="index"
+          >{{ item }}</van-tag
+        >
       </div>
     </div>
     <div class="hot">
@@ -14,37 +21,55 @@
         <h3>热门搜索</h3>
       </div>
       <div class="botton">
-        <van-tag plain :type="item.is_hot== 1 ? 'danger' : 'default'" v-for="(item,index) in hotKeywordList" :key="index">{{item.keyword}}</van-tag>
+        <van-tag
+          plain
+          :type="item.is_hot == 1 ? 'danger' : 'default'"
+          v-for="(item, index) in hotKeywordList"
+          :key="index"
+          >{{ item.keyword }}</van-tag
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { GetPopupData} from "@/request/api";
+import { GetPopupData, GetsSearchData } from "@/request/api";
 export default {
-  data(){
-    return{
-      historyKeywordList:[],
-      hotKeywordList:[],
-      defaultKeyword:'',
-    }
+  data() {
+    return {
+      IsShow:false,
+      historyKeywordList: [],
+      hotKeywordList: [],
+      defaultKeyword: "",
+    };
   },
-  created(){
-    this.GetPopup()
-    this.$emit("myEvent",this.defaultKeyword)
-
+  created() {
+    this.GetPopup();
   },
-  methods:{
-    async GetPopup(){
-      const {data:res}=await GetPopupData() 
-       if (res.errno==0) {
-        this.historyKeywordList=res.data.historyKeywordList
-        this.hotKeywordList=res.data.hotKeywordList
-        this.defaultKeyword=res.data.defaultKeyword.keyword
-        this.$emit("myEvent",this.defaultKeyword)
+  methods: {
+    async GetPopup() {
+      const { data: res } = await GetPopupData();
+      if (res.errno == 0) {
+        this.historyKeywordList = res.data.historyKeywordList;
+        this.hotKeywordList = res.data.hotKeywordList;
+        this.defaultKeyword = res.data.defaultKeyword.keyword;
+        this.$emit("myEvent", this.defaultKeyword);
       }
-      
+    },
+    tagValue(e) {
+      this.defaultKeyword = e.target.childNodes[0];
+      this.GetsSearch() 
+    },
+    // 搜索框
+    async GetsSearch() {
+        const SoData=this.$qs.stringify({keyword:this.defaultKeyword})
+      const { data: res } = await GetsSearchData({SoData});
+      console.log(res);
+      if (res.errno==0) {
+        // this.$router.push(`/product`)
+      }
+    
     },
   },
 };

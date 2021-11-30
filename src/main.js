@@ -6,6 +6,8 @@ import 'reset-css'
 import 'vant/lib/index.css'
 import '@/vantui'
 import 'amfe-flexible'
+import  qs from 'qs'
+Vue.prototype.$qs = qs
 Vue.config.productionTip = false
 
 new Vue({

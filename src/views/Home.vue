@@ -72,10 +72,6 @@ export default {
 }
 .my-swipe .van-swipe-item {
   width: 10rem;
-  // color: #fff;
-  // font-size: 20px;
-  // line-height: 150px;
-  // text-align: center;
   background-color: #39a9ed;
 }
 .search-top {
@@ -83,7 +79,7 @@ export default {
   position: fixed;
   top: 0;
   width: 10rem;
-  height: 1rem;
+  height: 1.4rem;
   z-index: 999;
 }
 //  自己写动画待续bugs
