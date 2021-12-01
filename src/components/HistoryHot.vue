@@ -7,7 +7,7 @@
       </div>
       <div class="botton">
         <van-tag
-          @click="tagValue"
+          @click="tagValue(item)"
           plain
           type="default"
           v-for="(item, index) in historyKeywordList"
@@ -26,6 +26,7 @@
           :type="item.is_hot == 1 ? 'danger' : 'default'"
           v-for="(item, index) in hotKeywordList"
           :key="index"
+          @click="tagValue(item.keyword)"
           >{{ item.keyword }}</van-tag
         >
       </div>
@@ -34,11 +35,10 @@
 </template>
 
 <script>
-import { GetPopupData, GetsSearchData } from "@/request/api";
+import { GetPopupData } from "@/request/api";
 export default {
   data() {
     return {
-      IsShow:false,
       historyKeywordList: [],
       hotKeywordList: [],
       defaultKeyword: "",
@@ -48,6 +48,7 @@ export default {
     this.GetPopup();
   },
   methods: {
+    // 历史+热门标签
     async GetPopup() {
       const { data: res } = await GetPopupData();
       if (res.errno == 0) {
@@ -57,19 +58,11 @@ export default {
         this.$emit("myEvent", this.defaultKeyword);
       }
     },
-    tagValue(e) {
-      this.defaultKeyword = e.target.childNodes[0];
-      this.GetsSearch() 
-    },
-    // 搜索框
-    async GetsSearch() {
-        const SoData=this.$qs.stringify({keyword:this.defaultKeyword})
-      const { data: res } = await GetsSearchData({SoData});
-      console.log(res);
-      if (res.errno==0) {
-        // this.$router.push(`/product`)
-      }
-    
+    // 点击标签
+    tagValue(item) {
+      this.defaultKeyword = item;
+      this.$emit("DiyEvent", item);
+      this.$emit("myEvent", this.defaultKeyword);
     },
   },
 };

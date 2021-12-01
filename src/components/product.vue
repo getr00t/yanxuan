@@ -2,16 +2,25 @@
   <div>
     <van-dropdown-menu>
       <van-dropdown-item title="综合" disabled />
-      <van-dropdown-item v-model="value" title="价格" :options="option"   @change='ChangePriceValue'/>
+      <van-dropdown-item
+        v-model="value"
+        title="价格"
+        :options="option"
+        @change="ChangePriceValue"
+      />
       <van-dropdown-item
         v-model="TargetValue"
         title="分类"
         :options="NewfilterCategory"
-        @change='CategoryChange'
+        @change="CategoryChange"
       />
     </van-dropdown-menu>
     <!-- 商品卡片-->
-    <van-empty   image="search" description="暂无商品" v-if="isShow"/>
+    <van-empty
+      v-if="goodsList.length == 0"
+      image="search"
+      description="暂无商品"
+    />
     <ProductCard :goodsList="goodsList" v-else></ProductCard>
   </div>
 </template>
@@ -25,36 +34,33 @@ export default {
   props: ["goodsList", "filterCategory"],
   data() {
     return {
-      value: '',
+      value: "",
       TargetValue: 0,
-      isShow: false,
       NewfilterCategory: [],
       option: [
-        { text: "由高到底", value: 'desc' },
-        { text: "由低到高", value: 'asc'},
-      ]
+        { text: "由高到底", value: "desc" },
+        { text: "由低到高", value: "asc" },
+      ],
     };
   },
   created() {
-    let NewArr = this.filterCategory.map(item => {
+    let NewArr = this.filterCategory.map((item) => {
       if (item.checked) {
-        this.TargetValue = item.id
+        this.TargetValue = item.id;
       }
-      console.log(this.TargetValue);
-      return { text: item.name, value: item.id ,...item};
+      return { text: item.name, value: item.id, ...item };
     });
-    console.log(NewArr);
     this.NewfilterCategory = NewArr;
   },
   methods: {
     // 分类
-    CategoryChange(CategoryValue){
-      this.$emit('CategoryChange',CategoryValue)
+    CategoryChange(CategoryValue) {
+      this.$emit("CategoryChange", CategoryValue);
     },
     // 价格
-    ChangePriceValue(OrderValue){
-      this.$emit('OrderChange',OrderValue)
-    }
+    ChangePriceValue(OrderValue) {
+      this.$emit("OrderChange", OrderValue);
+    },
   },
 };
 </script>

@@ -26,7 +26,7 @@ export default {
 <style lang="less" scoped>
 .top_box {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
   text-align: center;
   align-items: center;
