@@ -7,3 +7,6 @@ export const GetPopupData = () => request.get(`/search/index`)
 export const GetsSearchData = (params) => request.get(`/goods/list?${params}`)
 // 实时搜索
 export const GetLiveHelper = (params) => request.get(`/search/helper?${params}`)
+// 清除历史记录
+export const PostClearHistory = () => request.post(`/search/clearhistory`)
+

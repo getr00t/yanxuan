@@ -81,6 +81,7 @@ export default {
         this.isFlag = 3;
       console.log(this.goodsListArr.length);
       }
+      // 内容为空
         else{
           this.isFlag = 4;
         }

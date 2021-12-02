@@ -3,7 +3,7 @@
     <div class="history">
       <div class="top">
         <h3>历史记录</h3>
-        <van-icon name="delete-o" />
+        <van-icon name="delete-o" @click="DellHistory" />
       </div>
       <div class="botton">
         <van-tag
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { GetPopupData } from "@/request/api";
+import { GetPopupData, PostClearHistory } from "@/request/api";
 export default {
   data() {
     return {
@@ -63,6 +63,13 @@ export default {
       this.defaultKeyword = item;
       this.$emit("DiyEvent", item);
       this.$emit("myEvent", this.defaultKeyword);
+    },
+    // 清除搜索历史
+    async DellHistory() {
+      const { data: res } = await PostClearHistory();
+      if (res.errno == 0) {
+        this.GetPopup();
+      }
     },
   },
 };
