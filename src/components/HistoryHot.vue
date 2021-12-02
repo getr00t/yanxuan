@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="history">
+    <div class="history" v-show="isShow">
       <div class="top">
         <h3>历史记录</h3>
         <van-icon name="delete-o" @click="DellHistory" />
       </div>
-      <div class="botton">
+      <div class="botton" >
         <van-tag
           @click="tagValue(item)"
           plain
@@ -39,6 +39,7 @@ import { GetPopupData, PostClearHistory } from "@/request/api";
 export default {
   data() {
     return {
+      isShow: true,
       historyKeywordList: [],
       hotKeywordList: [],
       defaultKeyword: "",
@@ -68,7 +69,11 @@ export default {
     async DellHistory() {
       const { data: res } = await PostClearHistory();
       if (res.errno == 0) {
-        this.GetPopup();
+          this.$toast.success("删除成功");
+          setTimeout(() => {
+            this.isShow = false;
+          }, 1000);
+        
       }
     },
   },
