@@ -20,11 +20,11 @@
       @DiyEvent="HistoryHotValue"
     ></HistoryHot>
     <!-- 实时搜索 -->
-    <HelperList :Arrlist="Timelist" v-else-if="isFlag == 2"></HelperList>
+    <HelperList :Arrlist="Timelist" v-else-if="isFlag == 2" @listData="MyListData"></HelperList>
     <!-- 产品页 -->
     <Product
       v-else
-      :goodsList="goodsList"
+      :goodsList="goodsListArr"
       :filterCategory="filterCategory"
       @CategoryChange="ChangeValue"
       @OrderChange="OrderValue"
@@ -45,7 +45,7 @@ export default {
       placeholderValue: "",
       isFlag: 1,
       isShow: "",
-      goodsList: [],
+      goodsListArr: [],
       filterCategory: [],
       categoryId: 0,
       order: "desc",
@@ -67,7 +67,7 @@ export default {
       this.$router.go(-1);
     },
     async EnterSearch() {
-            console.log(this.goodsList.length);
+      console.log(this.goodsListArr.length);
       const SoData = this.$qs.stringify({
         keyword: this.SearchValue,
         categoryId: this.categoryId,
@@ -77,10 +77,13 @@ export default {
       const { data: res } = await GetsSearchData(SoData);
       if (res.data.data.length !== 0) {
         this.filterCategory = res.data.filterCategory;
-        this.goodsList = res.data.goodsList;
-        this.isFlag = !this.isFlag;
-      console.log(this.goodsList.length);
+        this.goodsListArr = res.data.goodsList;
+        this.isFlag = 3;
+      console.log(this.goodsListArr.length);
       }
+        else{
+          this.isFlag = 4;
+        }
     },
     clearValue() {
       this.SearchValue = "";
@@ -90,11 +93,9 @@ export default {
       this.placeholderValue = event;
     },
     // 分类子传父
-    ChangeValue(event, isShow) {
+    ChangeValue(event) {
       this.categoryId = event;
-      this.isShow = isShow;
-      console.log(this.isShow);
-      this.isFlag = !this.isFlag;
+      // this.isFlag = !this.isFlag;
       this.EnterSearch();
     },
     // 价格排列顺序子传父
@@ -102,7 +103,7 @@ export default {
       console.log(event);
       this.order = event;
       this.sort = "price";
-      this.isFlag = !this.isFlag;
+      // this.isFlag = !this.isFlag;
       this.EnterSearch();
     },
     // 实时搜索
@@ -126,6 +127,12 @@ export default {
       this.EnterSearch();
       console.log(event);
     },
+    // 实时搜索点击
+    MyListData(evevt){
+      this.SearchValue=evevt
+      this.EnterSearch();
+      // console.log(evevt);
+    }
   },
 };
 </script>

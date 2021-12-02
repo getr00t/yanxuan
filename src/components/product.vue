@@ -21,7 +21,7 @@
       image="search"
       description="暂无商品"
     />
-    <ProductCard :goodsList="goodsList" v-else></ProductCard>
+    <ProductCard :goodsListArr="goodsList" v-else></ProductCard>
   </div>
 </template>
 

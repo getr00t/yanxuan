@@ -19,7 +19,7 @@ export default {
   },
     methods: {
     DiyClick(item){
-      console.log(item);
+      this.$emit("listData",item)
     }
   },
 };
