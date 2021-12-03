@@ -5,7 +5,7 @@
         <h3>历史记录</h3>
         <van-icon name="delete-o" @click="DellHistory" />
       </div>
-      <div class="botton" >
+      <div class="botton">
         <van-tag
           @click="tagValue(item)"
           plain
@@ -69,11 +69,10 @@ export default {
     async DellHistory() {
       const { data: res } = await PostClearHistory();
       if (res.errno == 0) {
+        setTimeout(() => {
+          this.isShow = false;
           this.$toast.success("删除成功");
-          setTimeout(() => {
-            this.isShow = false;
-          }, 1000);
-        
+        }, 1000);
       }
     },
   },
