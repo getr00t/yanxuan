@@ -23,11 +23,23 @@ const routes = [
       },
     ]
   },
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
+  {
+    path: '/Topic',
+    name: 'Topic',
+    component: () => import(/* webpackChunkName: "about" */ '@/components/Topic')
+  }, {
+    path: '/sort',
+    name: 'sort',
+    component: () => import(/* webpackChunkName: "about" */ '@/components/sort')
+  }, {
+    path: '/ShoppingCart',
+    name: 'ShoppingCart',
+    component: () => import(/* webpackChunkName: "about" */ '@/components/ShoppingCart')
+  }, {
+    path: '/mine',
+    name: 'mine',
+    component: () => import(/* webpackChunkName: "about" */ '@/components/mine')
+  }
 ]
 
 const router = new VueRouter({

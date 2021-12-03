@@ -1,8 +1,21 @@
 <template>
   <div id="app">
     <router-view />
+    <Mytabber></Mytabber>
   </div>
 </template>
+<script>
+import Mytabber from "@/components/Mytabber";
+
+export default {
+  data() {
+    return {};
+  },
+  components: {
+    Mytabber,
+  },
+};
+</script>
 
 <style lang="less">
 #app {
@@ -16,6 +29,5 @@
   html {
     font-size: 75px !important;
   }
-  
 }
 </style>
