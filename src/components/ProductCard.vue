@@ -32,6 +32,7 @@ export default {
   color: #333;
   width: 100%;
   box-sizing: border-box;
+  background-color: #fff;
   li {
     width: 50%;
     padding: 0.266667rem;

@@ -9,4 +9,5 @@ export const GetsSearchData = (params) => request.get(`/goods/list?${params}`)
 export const GetLiveHelper = (params) => request.get(`/search/helper?${params}`)
 // 清除历史记录
 export const PostClearHistory = () => request.post(`/search/clearhistory`)
-
+// 登录
+export const PostLogin = (params) => request.post(`/auth/loginByWeb`, params)

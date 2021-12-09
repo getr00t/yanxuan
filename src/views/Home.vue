@@ -1,30 +1,32 @@
 <template>
   <div class="header">
-    <van-search
-      class="search-top"
-      v-model="SearchValue"
-      disabled
-      shape="round"
-      background="#fff"
-      placeholder="请输入搜索关键词"
-      @click="GoPopup"
-    />
-    <!-- 解决固定定位 -->
-    <div class="clear_fixed"></div>
-    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="#1989fa">
-      <van-swipe-item v-for="item in BannerList" :key="item.id">
-        <img
-          :src="item.image_url"
-          width="100%"
-          style="display: block"
-          alt="luyouqihome"
-        />
-      </van-swipe-item>
-    </van-swipe>
+    <div v-if="$route.path == '/home'">
+      <van-search
+        class="search-top"
+        v-model="SearchValue"
+        disabled
+        shape="round"
+        background="#fff"
+        placeholder="请输入搜索关键词"
+        @click="GoPopup"
+      />
+      <!-- 解决固定定位 -->
+      <div class="clear_fixed"></div>
+      <van-swipe class="my-swipe" :autoplay="3000" indicator-color="#1989fa" >
+        <van-swipe-item v-for="item in BannerList" :key="item.id">
+          <img
+            :src="item.image_url"
+            width="100%"
+            style="display: block"
+            alt="luyouqihome"
+          />
+        </van-swipe-item>
+      </van-swipe>
+    </div>
     <!-- 弹出层子路由 -->
     <!-- 动画，使用的vant现场内置样式类名-->
     <transition name="van-slide-right">
-      <router-view></router-view>
+      <router-view v-if="$route.path == '/home/popup'"></router-view>
     </transition>
   </div>
 </template>
@@ -53,7 +55,6 @@ export default {
     // 跳转弹出层
     GoPopup() {
       this.$router.push(`home/popup`);
-      
     },
   },
   components: {},

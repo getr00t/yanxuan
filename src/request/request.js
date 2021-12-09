@@ -2,11 +2,15 @@ import axios from 'axios'
 // 创建实例
 const instance = axios.create({
    baseURL: 'http://kumanxuan1.f3322.net:8001',
-   timeout: 1000
-   // headers: headers
+   timeout: 2000,
+   method: 'post',
+   headers: {
+     'Content-Type': 'application/json; charset=utf-8'
+   },
 })
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
+   axios.defaults.headers['token'] = localStorage.getItem('token');
    // 在发送请求之前做些什么
    return config;
 

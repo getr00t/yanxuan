@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="header" >
     <van-search
       class="search-top"
       v-model="SearchValue"
@@ -60,6 +60,7 @@ export default {
     HelperList,
   },
   created() {
+       console.log( this.$route);
   },
   methods: {
     Gotohome() {
@@ -141,7 +142,7 @@ export default {
 .header {
   position: absolute;
   top: 0;
-  z-index: 999;
+  z-index: 99;
   background: #efefee;
   width: 10rem;
   height: 100%;
