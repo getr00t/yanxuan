@@ -35,6 +35,9 @@ const routes = [
   }, {
     path: '/mine',
     component: () => import(/* webpackChunkName: "about" */ '@/components/Mine')
+  }, {
+    path: '/detail/:id',
+    component: () => import(/* webpackChunkName: "about" */ '@/components/Detail')
   }
 ]
 

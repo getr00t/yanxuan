@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Button, Search, Swipe, SwipeItem, Icon, Tag, DropdownMenu, DropdownItem, Empty, List, Cell, CellGroup, Toast, Tabbar, TabbarItem, Dialog, Form,Field , Image as VanImage } from 'vant';
+import { Button, Search, Swipe, SwipeItem, Icon, Tag, DropdownMenu, DropdownItem, Empty, List, Cell, CellGroup, Toast, Tabbar, TabbarItem, Dialog, Form,Field , Image as VanImage,Lazyload  } from 'vant';
 
 Vue.use(Button);
 Vue.use(Search);
@@ -19,3 +19,4 @@ Vue.use(Form);
 Vue.use(Field);
 Vue.use(Dialog);
  Vue.use(VanImage);
+ Vue.use(Lazyload);

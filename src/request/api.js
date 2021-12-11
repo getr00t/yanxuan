@@ -11,3 +11,5 @@ export const GetLiveHelper = (params) => request.get(`/search/helper?${params}`)
 export const PostClearHistory = () => request.post(`/search/clearhistory`)
 // 登录
 export const PostLogin = (params) => request.post(`/auth/loginByWeb`, params)
+// 产品详情
+export const GetDetail = (id) => request.get(`/goods/detail?id=${id}`)

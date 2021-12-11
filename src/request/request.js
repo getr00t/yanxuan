@@ -3,10 +3,10 @@ import axios from 'axios'
 const instance = axios.create({
    baseURL: 'http://kumanxuan1.f3322.net:8001',
    timeout: 2000,
-   method: 'post',
-   headers: {
-     'Content-Type': 'application/json; charset=utf-8'
-   },
+   // method: 'post',
+   // headers: {
+   //   'Content-Type': 'application/json; charset=utf-8'
+   // },
 })
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
