@@ -63,7 +63,7 @@ router.beforeEach((to, from, next) => {
     }
     else {
       // 路由里面获取不到this这里需要注意使用toast
-      Vue.prototype.$toast.fail('请登录');
+      Vue.prototype.$toast.fail('请先登录');
       setTimeout(() => {
         next('/mine');
       }, 1000);
