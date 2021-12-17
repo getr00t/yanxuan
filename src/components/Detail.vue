@@ -67,12 +67,8 @@
           <span>{{ item.value }}</span>
         </li>
       </ul>
-<!-- 商品信息（返回html标签） -->
-         <van-image
-         class="img_box"
-          lazy-load
-         v-html="goods_desc"
-        />
+      <div class="img_box" v-html="goods_desc">
+      </div>
     </div>
     <!-- 常见问题 -->
     <div class="issue"></div>
