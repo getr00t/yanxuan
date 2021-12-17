@@ -14,26 +14,35 @@ const routes = [
   {
     path: '/home',
     component: Home,
+    meta: { tabbarisshow: true },
     children: [
       {
         // 二级路由要么不带“/”,要么就带上完整路径地址:包括一级路径地址一起带上，完整的路径，如:'/home/popup'
         path: 'popup',
+        meta: { tabbarisshow: true },
         component: Popup
       }
     ]
   },
   {
     path: '/topic',
+    meta: { tabbarisshow: true },
+
     component: () => import(/* webpackChunkName: "about" */ '@/components/Topic')
   }, {
     path: '/sort',
+    meta: { tabbarisshow: true },
+
     component: () => import(/* webpackChunkName: "about" */ '@/components/Sort')
   }, {
     path: '/shoppingcart',
+    meta: { tabbarisshow: true },
 
     component: () => import(/* webpackChunkName: "about" */ '@/components/ShoppingCart')
   }, {
     path: '/mine',
+    meta: { tabbarisshow: true },
+
     component: () => import(/* webpackChunkName: "about" */ '@/components/Mine')
   }, {
     path: '/detail/:id',

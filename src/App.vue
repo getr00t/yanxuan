@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view />
-    <Mytabber></Mytabber>
+    <Mytabber v-show="$route.meta.tabbarisshow"></Mytabber>
   </div>
 </template>
 <script>
@@ -11,6 +11,7 @@ export default {
   data() {
     return {};
   },
+  created() {},
   components: {
     Mytabber,
   },
