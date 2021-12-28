@@ -13,3 +13,5 @@ export const PostClearHistory = () => request.post(`/search/clearhistory`)
 export const PostLogin = (params) => request.post(`/auth/loginByWeb`, params)
 // 产品详情
 export const GetDetail = (id) => request.get(`/goods/detail?id=${id}`)
+// 相关产品
+export const GetRelated=(id)=>request.get(`/goods/related?id=${id}`)

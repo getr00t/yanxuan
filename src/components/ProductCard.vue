@@ -21,6 +21,7 @@ export default {
   created() {},
   methods:{
     GoToDetail(item){
+      console.log(item.id);
       this.$router.push(`/Detail/${item.id}`)
     }
   }
