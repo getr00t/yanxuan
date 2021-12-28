@@ -336,6 +336,7 @@ export default {
   }
   // 解决固定定位占位
  .handle_bug {
+   background-color: #fff;
     width: 100%;
     height:1.333333rem;
   }
