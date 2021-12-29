@@ -42,20 +42,12 @@
     <van-cell @click="showsku" class="popup_box" is-link>
       <p>展示弹出层</p>
     </van-cell>
-    <van-popup v-model="show" position="bottom" :style="{ height: '30%' }">
       <van-sku
-        v-model="isshow"
+        v-model="iSshow"
         :sku="sku"
         :goods="goods"
-        :goods-id="goodsId"
-        :quota="quota"
-        :quota-used="quotaUsed"
         :hide-stock="sku.hide_stock"
-        :message-config="messageConfig"
-        @buy-clicked="onBuyClicked"
-        @add-cart="onAddCartClicked"
       />
-    </van-popup>
     <!-- 商品参数 -->
     <div class="Productdata">
       <h2>商品参数</h2>
@@ -86,7 +78,7 @@
       <span class="r_span"></span>
     </div>
     <ProductCard :goodsListArr="relatedList"></ProductCard>
-        <!-- 解决商品导航固定定位挡住 -->
+    <!-- 解决商品导航固定定位挡住 -->
     <div class="handle_bug"></div>
     <!-- 商品导航 -->
     <van-goods-action>
@@ -138,19 +130,15 @@ export default {
       // 相关产品
       relatedList: [],
       // 弹出层
-      show: false,
-      isshow: false,
-      goodsId: "",
-      quota: 0,
-      quotaUsed: 0,
+      iSshow: false,
       sku: {
         // 数据结构见下方文档
+        hide_stock: false,
+        tree: [],
       },
       goods: {
         // 数据结构见下方文档
-      },
-      messageConfig: {
-        // 数据结构见下方文档
+        picture: "",
       },
       // 商品导航收藏
       iSHide: true,
@@ -182,7 +170,7 @@ export default {
     // 弹出层
     showsku() {
       console.log(1);
-      this.show = true;
+      this.iSshow = true;
     },
     onBuyClicked() {
       console.log(2);
@@ -227,6 +215,10 @@ export default {
   }
   .popup_box {
     border-top: 0.013333rem solid #323233;
+  }
+  // sku高度
+  .van-sku-container{
+    min-height: 30%;
   }
   .Productdata {
     background-color: #ffff;
@@ -335,10 +327,13 @@ export default {
     }
   }
   // 解决固定定位占位
- .handle_bug {
-   background-color: #fff;
+  .handle_bug {
+    background-color: #fff;
     width: 100%;
-    height:1.333333rem;
+    height: 1.333333rem;
+  }
+  .van-goods-action {
+    z-index: 9999;
   }
 }
 </style>
