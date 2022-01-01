@@ -203,12 +203,11 @@ export default {
           number: this.number,
         };
         const { data: res } = await PostAddcart(data);
-        console.log(res);
       } else {
         this.iSshow = false;
       }
     },
-    // 购物车数量
+    // 获取购物车数量
     async goodscount() {
       if (localStorage.getItem("X-Nideshop-Token")) {
         const { data: res } = await Getgoodscount();

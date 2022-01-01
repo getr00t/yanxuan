@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Vue from 'vue'
 // 创建实例
 const instance = axios.create({
    baseURL: 'http://kumanxuan1.f3322.net:8001',
@@ -9,6 +10,10 @@ const instance = axios.create({
 })
 // 添加请求拦截器
 instance.interceptors.request.use(function (config) {
+   if (config.timeout > 2000) {
+      Vue.prototype.$toast.setDefaultOptions({ duration: 120000 });
+      Vue.prototype.$toast.fail('网络请求超时请检查网络或联系网络管理员')
+   }
    if (localStorage.getItem("X-Nideshop-Token")) {
       config.headers["X-Nideshop-Token"] = localStorage.getItem("X-Nideshop-Token");
 

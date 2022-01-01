@@ -10,7 +10,6 @@ import  qs from 'qs'
 
 Vue.prototype.$qs = qs
 Vue.config.productionTip = false
-
 new Vue({
   router,
   store,
