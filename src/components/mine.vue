@@ -78,7 +78,7 @@ export default {
       const { data: res } = await PostLogin(logindata);
       let { userInfo, token } = res.data;
       if (res.errno == 0) {
-        localStorage.setItem("token", token);
+        localStorage.setItem("X-Nideshop-Token", token);
         // localStorage只能存字符串，如果需要存对象，首先要转化为字符串 利用JSON.stringify() ( 存单个就不用考虑这些了 )
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
         const newuserInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -113,7 +113,7 @@ export default {
     // 获取本地token
     GetToken() {
       const newuserInfo = JSON.parse(localStorage.getItem("userInfo"));
-      if (localStorage.getItem("token")) {
+      if (localStorage.getItem("X-Nideshop-Token")) {
         this.text = newuserInfo.username;
         this.imgurl = newuserInfo.avatar;
         this.iconname = "cross";

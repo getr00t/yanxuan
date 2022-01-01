@@ -1,7 +1,11 @@
 <template>
   <div>
     <ul class="top_box">
-      <li v-for="(item, index) in goodsListArr" :key="index" @click="GoToDetail(item)">
+      <li
+        v-for="(item, index) in goodsListArr"
+        :key="index"
+        @click="GoToDetail(item)"
+      >
         <img :src="item.list_pic_url" alt="img" />
         <h6 class="van-ellipsis">{{ item.name }}</h6>
         <span>￥{{ item.retail_price }}元</span>
@@ -19,12 +23,11 @@ export default {
     };
   },
   created() {},
-  methods:{
-    GoToDetail(item){
-      console.log(item.id);
-      this.$router.push(`/Detail/${item.id}`)
-    }
-  }
+  methods: {
+    GoToDetail(item) {
+      this.$router.push(`/Detail/${item.id}`);
+    },
+  },
 };
 </script>
 

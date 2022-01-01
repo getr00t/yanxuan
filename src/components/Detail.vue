@@ -42,12 +42,13 @@
     <van-cell @click="showsku" class="popup_box" is-link>
       <p>展示弹出层</p>
     </van-cell>
-      <van-sku
-        v-model="iSshow"
-        :sku="sku"
-        :goods="goods"
-        :hide-stock="sku.hide_stock"
-      />
+    <van-sku
+      v-model="iSshow"
+      :sku="sku"
+      :goods="goods"
+      :hide-stock="sku.hide_stock"
+      @stepper-change="changenumber"
+    />
     <!-- 商品参数 -->
     <div class="Productdata">
       <h2>商品参数</h2>
@@ -95,7 +96,12 @@
         v-else
         @click="HideStar"
       />
-      <van-goods-action-icon icon="cart-o" text="购物车" badge="0" />
+      <van-goods-action-icon
+        icon="cart-o"
+        text="购物车"
+        :badge="badge"
+        @click="clickcart"
+      />
       <van-goods-action-button type="danger" text="立即购买" />
       <van-goods-action-button
         type="warning"
@@ -108,7 +114,12 @@
 
 <script>
 import ProductCard from "@/components/ProductCard";
-import { GetDetail, GetRelated } from "@/request/api";
+import {
+  GetDetail,
+  GetRelated,
+  Getgoodscount,
+  PostAddcart,
+} from "@/request/api";
 export default {
   components: { ProductCard },
   data() {
@@ -131,10 +142,20 @@ export default {
       relatedList: [],
       // 弹出层
       iSshow: false,
+      // 购物车数量
+      badge: 0,
+      // 产品id，来自productList的第一个数组项中的id
+      productId: "",
+      // 加入购物车数量
+      number: 0,
       sku: {
         // 数据结构见下方文档
         hide_stock: false,
         tree: [],
+        // 价格
+        price: "",
+        // 库存
+        stock_num: 0,
       },
       goods: {
         // 数据结构见下方文档
@@ -147,6 +168,7 @@ export default {
   created() {
     this.getdata();
     this.GetRelated();
+    this.goodscount();
   },
   methods: {
     // 产品明细
@@ -156,10 +178,14 @@ export default {
         this.gallery = res.data.gallery;
         this.name = res.data.info.name;
         this.goods_brief = res.data.info.goods_brief;
+        this.goods.picture = res.data.info.list_pic_url;
         this.retail_price = res.data.info.retail_price;
+        this.sku.price = res.data.info.retail_price.toFixed(2) + "元";
+        this.sku.stock_num = res.data.info.goods_number;
         this.attribute = res.data.attribute;
         this.goods_desc = res.data.info.goods_desc;
         this.issue = res.data.issue;
+        this.productId = res.data.productList[0].id;
       }
     },
     // 相关产品
@@ -167,17 +193,45 @@ export default {
       const { data: res } = await GetRelated(this.$route.params.id);
       this.relatedList = res.data.goodsList;
     },
-    // 弹出层
-    showsku() {
-      console.log(1);
+    // 弹出sku
+    async showsku() {
       this.iSshow = true;
+      if (this.iSshow) {
+        let data = {
+          goodsId: this.$route.params.id,
+          productId: this.productId,
+          number: this.number,
+        };
+        const { data: res } = await PostAddcart(data);
+        console.log(res);
+      } else {
+        this.iSshow = false;
+      }
     },
-    onBuyClicked() {
-      console.log(2);
+    // 购物车数量
+    async goodscount() {
+      if (localStorage.getItem("X-Nideshop-Token")) {
+        const { data: res } = await Getgoodscount();
+        if (res.errno == 0) {
+          this.badge = res.data.cartTotal.goodsCount;
+          console.log(res);
+        }
+      }
     },
-    onAddCartClicked() {
-      console.log(3);
+
+    //  查看购物车详情
+    clickcart() {
+      // if (localStorage.getItem("X-Nideshop-Token")) {
+      // }
+      // this.$toast("请先登录")
+      // this.$router.push(`/mine`);
     },
+    // 购买数量
+    changenumber(value) {
+      this.number = value;
+      console.log(this.number);
+    },
+
     // 商品导航
     onClickIcon() {
       this.$toast("点击图标");
@@ -217,7 +271,7 @@ export default {
     border-top: 0.013333rem solid #323233;
   }
   // sku高度
-  .van-sku-container{
+  .van-sku-container {
     min-height: 30%;
   }
   .Productdata {

@@ -64,14 +64,14 @@ VueRouter.prototype.push = function push(location, onResolve, onReject) {
 }
 // 导航守卫
 router.beforeEach((to, from, next) => {
-  let token = localStorage.getItem("token")
+  let token = localStorage.getItem("X-Nideshop-Token")
   if (to.path == "/shoppingcart") {
     if (token) {
       // 只适应shoppingcart路由放行
       next()
     }
     else {
-      // 路由里面获取不到this这里需要注意使用toast
+      // 路由里面获取不到this这里使用toast需要注意！！！
       Vue.prototype.$toast.fail('请先登录');
       setTimeout(() => {
         next('/mine');
