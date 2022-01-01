@@ -14,4 +14,8 @@ export const PostLogin = (params) => request.post(`/auth/loginByWeb`, params)
 // 产品详情
 export const GetDetail = (id) => request.get(`/goods/detail?id=${id}`)
 // 相关产品
-export const GetRelated=(id)=>request.get(`/goods/related?id=${id}`)
+export const GetRelated = (id) => request.get(`/goods/related?id=${id}`)
+// 购物车产品数量
+export const Getgoodscount = () => request.get(`/cart/goodscount`)
+// 加入购物车
+export const PostAddcart = (params) => request.post(`/cart/add`, params)
