@@ -147,7 +147,7 @@ export default {
       // 产品id，来自productList的第一个数组项中的id
       productId: "",
       // 加入购物车数量
-      number: 0,
+      number: 1,
       sku: {
         // 数据结构见下方文档
         hide_stock: false,
@@ -193,18 +193,30 @@ export default {
       const { data: res } = await GetRelated(this.$route.params.id);
       this.relatedList = res.data.goodsList;
     },
-    // 弹出sku
+    // 弹出sku和加入购物车
     async showsku() {
-      this.iSshow = true;
       if (this.iSshow) {
-        let data = {
-          goodsId: this.$route.params.id,
-          productId: this.productId,
-          number: this.number,
-        };
-        const { data: res } = await PostAddcart(data);
+        if (localStorage.getItem("X-Nideshop-Token")) {
+          let data = {
+            goodsId: this.$route.params.id,
+            productId: this.productId,
+            number: this.number,
+          };
+          const { data: res } = await PostAddcart(data);
+          if (res.errno == 400) {
+            this.$toast.fail(res.errmsg);
+          }
+          if (res.errno == 0) {
+            this.iSshow = false;
+            this.goodscount();
+            this.$toast.success("添加成功");
+          }
+        } else {
+          this.$toast("请先登录");
+          this.$router.push(`/mine`);
+        }
       } else {
-        this.iSshow = false;
+        this.iSshow = true;
       }
     },
     // 获取购物车数量
@@ -220,10 +232,12 @@ export default {
 
     //  查看购物车详情
     clickcart() {
-      // if (localStorage.getItem("X-Nideshop-Token")) {
-      // }
-      // this.$toast("请先登录")
-      // this.$router.push(`/mine`);
+      if (localStorage.getItem("X-Nideshop-Token")) {
+        this.$router.push(`/shoppingcart`);
+      } else {
+        this.$toast("请先登录");
+        this.$router.push(`/mine`);
+      }
     },
     // 购买数量
     changenumber(value) {

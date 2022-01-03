@@ -19,3 +19,6 @@ export const GetRelated = (id) => request.get(`/goods/related?id=${id}`)
 export const Getgoodscount = () => request.get(`/cart/goodscount`)
 // 加入购物车
 export const PostAddcart = (params) => request.post(`/cart/add`, params)
+// 购物车详情数据
+export const GetCartDeta = () => request.get(`/cart/index`)
+
