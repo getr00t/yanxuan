@@ -19,8 +19,9 @@
       <van-checkbox
         v-for="item in cartList"
         :key="item.id"
-        :name="item.id"
-        v-model="checked"
+        :name="item.product_id"
+        v-model="item.checked"
+        @click="CheckedHeadl(item)"
       >
         <van-card
           :num="item.number"
@@ -43,10 +44,14 @@
           </template>
     </van-swipe-cell> -->
     <!-- 提交订单栏 -->
-    <van-submit-bar :price="goodsAmount"  button-text="提交订单" @submit="onSubmit">
-      <van-checkbox v-model="checked">全选</van-checkbox>
+    <van-submit-bar
+      :price="checkedGoodsAmount"
+      button-text="提交订单"
+      @submit="onSubmit"
+    >
+      <van-checkbox v-model="checkedAll">全选</van-checkbox>
       <template #tip>
-        累计共{{ 0}}件商品，可点击
+        累计共{{ checkedGoodsCount }}件商品，可点击
         <van-button type="primary" size="small">编辑</van-button>
         <span @click="onClickEditAddress"> 按钮进行商品数量修改 </span>
       </template>
@@ -55,7 +60,7 @@
 </template>
 
 <script>
-import { GetCartDeta } from "@/request/api";
+import { GetCartDeta, Postchecked } from "@/request/api";
 export default {
   data() {
     return {
@@ -64,24 +69,61 @@ export default {
       // 商品总列表
       cartList: "",
       // 复选框组
-        result: [],
-      checked: true,
+      result: [],
       // 所有商品总价
-      goodsAmount: 0,
+      checkedGoodsAmount: 0,
+      // 选中的商品总数
+      checkedGoodsCount: "",
     };
   },
   created() {
     this.GetCart();
   },
+  computed: {
+    // 全选框
+    checkedAll: {
+      get() {
+        console.log(this.result.length);
+        console.log(this.cartList.length);
+        return this.result.length == this.cartList.length ? true : false;
+      },
+      async set(newchecked) {
+        let newarr = [];
+        this.cartList.map((item) => {
+          newarr.push(item.product_id);
+        });
+        console.log(newarr);
+        const data = {
+          isChecked: newchecked ? 1 : 0,
+          // join默认是以,号分割
+          productIds: newarr.join(),
+        };
+        console.log(data);
+        const { data: res } = await Postchecked(data);
+        if (res.errno == 0) {
+          // this.cartList = res.data.cartList;
+          // this.checkedGoodsAmount =
+          //   res.data.cartTotal.checkedGoodsAmount.toFixed(2) * 100;
+          // this.checkedGoodsCount = res.data.cartTotal.checkedGoodsCount;
+        }
+      },
+    },
+  },
   methods: {
     async GetCart() {
       const { data: res } = await GetCartDeta();
       if (res.errno == 0) {
-        console.log(res.data.cartList);
         this.cartList = res.data.cartList;
-        this.goodsAmount = res.data.cartTotal.goodsAmount.toFixed(2)*100;
+        this.checkedGoodsAmount =
+          res.data.cartTotal.checkedGoodsAmount.toFixed(2) * 100;
+        this.checkedGoodsCount = res.data.cartTotal.checkedGoodsCount;
       }
-      console.log(this.goodsAmount);
+      // this.result = [];
+      this.cartList.map((item) => {
+        if (item.checked == 1) {
+          this.result.push(item.product_id);
+        }
+      });
     },
     onClickEditAddress() {
       console.log(1);
@@ -92,6 +134,22 @@ export default {
     toggleAll() {
       // this.checked = true;
       // this.$refs.checkboxGroup.toggleAll();
+    },
+    // 复选框状态
+    async CheckedHeadl(item) {
+      console.log(item.checked);
+      const data = {
+        isChecked: item.checked == 1 ? 0 : 1,
+        productIds: item.product_id.toString(),
+      };
+      const { data: res } = await Postchecked(data);
+      if (res.errno == 0) {
+        this.cartList = res.data.cartList;
+        this.checkedGoodsAmount =
+          res.data.cartTotal.checkedGoodsAmount.toFixed(2) * 100;
+        this.checkedGoodsCount = res.data.cartTotal.checkedGoodsCount;
+      }
+      console.log(item.product_id);
     },
   },
 };

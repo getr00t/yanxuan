@@ -21,4 +21,6 @@ export const Getgoodscount = () => request.get(`/cart/goodscount`)
 export const PostAddcart = (params) => request.post(`/cart/add`, params)
 // 购物车详情数据
 export const GetCartDeta = () => request.get(`/cart/index`)
+// 点击切换商品选中状态 baseurl/cart/checked
+export const Postchecked = (params) => request.post(`/cart/checked`, params)
 
